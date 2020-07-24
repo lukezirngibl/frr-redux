@@ -42,19 +42,31 @@ export const configureApi = <
     meta?: any
   }
 
-  type CreateSuccessType<E extends Endpoints, T extends string, M = {}> = {
+  type CreateSuccessType<
+    E extends Endpoints,
+    T extends string,
+    M = undefined
+  > = {
     type: T
     meta: ArgumentTypes<typeof mapEndpointToFunc[E]>[0] & M
     payload: UnwrapPromise<ReturnType<typeof mapEndpointToFunc[E]>>
   }
 
-  type CreateRequestType<E extends Endpoints, T extends string, M = {}> = {
+  type CreateRequestType<
+    E extends Endpoints,
+    T extends string,
+    M = undefined
+  > = {
     type: T
     meta: ArgumentTypes<typeof mapEndpointToFunc[E]>[0] & M
     payload: ArgumentTypes<typeof mapEndpointToFunc[E]>[0]
   }
 
-  type CreateFailureType<E extends Endpoints, T extends string, M = {}> = {
+  type CreateFailureType<
+    E extends Endpoints,
+    T extends string,
+    M = undefined
+  > = {
     type: T
     meta: ArgumentTypes<typeof mapEndpointToFunc[E]>[0] & M
     payload: {}

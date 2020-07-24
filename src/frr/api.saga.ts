@@ -4,6 +4,7 @@ import { RestApiPayload, SystemActionType } from './api.types'
 export type SagaApiConfig = {
   baseUrl: string
   getToken: () => Promise<string | undefined>
+  debug: boolean
 }
 
 const makeApiRequest = (config: SagaApiConfig) => async ({
@@ -31,6 +32,10 @@ const makeApiRequest = (config: SagaApiConfig) => async ({
   const e = endpoint.endsWith('/')
     ? endpoint.slice(0, endpoint.length - 1)
     : endpoint
+
+  if (config.debug) {
+    console.log(`${server || config.baseUrl}/api${e}`, options)
+  }
 
   return fetch(`${server || config.baseUrl}/api${e}`, options)
 }
@@ -72,6 +77,9 @@ const configuireRestApi = (config: SagaApiConfig) =>
       // console.log(raw, timeout)
 
       if (!raw) {
+        if (config.debug) {
+          console.log('error - 1')
+        }
         // yield put(
         //   setToastMessage(
         //     some({
@@ -93,7 +101,14 @@ const configuireRestApi = (config: SagaApiConfig) =>
           meta,
         })
 
+        if (config.debug) {
+          console.log('error - 2')
+        }
+
         if (raw.status !== 410) {
+          if (config.debug) {
+            console.log('error - 3')
+          }
           // console.log({
           //   message:
           //     'error' in payload && typeof payload.error === 'string'
@@ -123,6 +138,9 @@ const configuireRestApi = (config: SagaApiConfig) =>
         })
       }
     } catch (error) {
+      if (config.debug) {
+        console.log('error - 4')
+      }
       yield put({
         type: types.failure,
         payload: {},
