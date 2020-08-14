@@ -5,6 +5,7 @@ import {
   RestCallAction,
   RestMethod,
   SystemActionType,
+  PostRequest,
 } from './api.types'
 import { toArray } from 'fp-ts/lib/Record'
 import { fromNullable } from 'fp-ts/lib/Option'
@@ -243,7 +244,7 @@ export const configureTypeReduxApiCreator = <
 //   typeof mapEndpointToMethod
 // >(mapEndpointToMethod)
 
-// const Demo = eco.createEndpoint(
+// const Demo = eco.createEndpoint()(
 //   {
 //     request: 'DEMO_REQUEST',
 //     success: 'DEMO_SUCCESS',
