@@ -209,21 +209,23 @@ export const configureTypeReduxApiCreator = <
     e: Endpoint,
     config?: ExtraEndpointConfig,
   ) => {
-    type mkType<T> = Newtype<{ readonly EUR: unique symbol }, T>
-
     const requestType = `${t}_REQUEST`
     const successType = `${t}_SUCCESS`
     const failureType = `${t}_FAILURE`
 
-    const types = {
-      request: requestType,
-      success: successType,
-      failure: failureType,
-    } as {
-      readonly request: string
-      readonly success: string
-      readonly failure: string
+    const r = Symbol(requestType)
+
+    type mkType<A, B, C> = {
+      readonly request: A
+      readonly success: B
+      readonly failure: C
     }
+
+    const types = ({
+      request: `${t}_REQUEST`,
+      success: `${t}_SUCCESS`,
+      failure: `${t}_FAILURE`,
+    } as unknown) as mkType<typeof r, typeof successType, typeof failureType>
 
     const ActionA = createApiType<typeof types, Endpoint, M>()
     type Action = typeof ActionA
