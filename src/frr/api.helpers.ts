@@ -9,6 +9,7 @@ import {
 } from './api.types'
 import { toArray } from 'fp-ts/lib/Record'
 import { fromNullable } from 'fp-ts/lib/Option'
+import { Newtype } from 'newtype-ts'
 
 export const configureTypeReduxApiCreator = <
   API extends any,
@@ -201,20 +202,30 @@ export const configureTypeReduxApiCreator = <
   }
 
   const createEndpoint = <M = undefined>() => <
-    T extends { request: string; failure: string; success: string },
+    T extends string,
     Endpoint extends Endpoints
   >(
     t: T,
     e: Endpoint,
     config?: ExtraEndpointConfig,
   ) => {
-    const ActionA = createApiType<T, Endpoint, M>()
+    type Request = 'Request'
+    type Failure = 'Failure'
+    type Success = 'Success'
+
+    const types = {
+      request: `${t}_REQUEST` as Request,
+      success: `${t}_SUCCESS` as Success,
+      failure: `${t}_FAILURE` as Failure,
+    } as const
+
+    const ActionA = createApiType<typeof types, Endpoint, M>()
     type Action = typeof ActionA
-    const call = callAPI<Action>(e, config)(t)
+    const call = callAPI<Action>(e, config)(types)
     return {
       call,
       action: (undefined as unknown) as Action,
-      types: t,
+      types: types,
     }
   }
 
@@ -244,14 +255,7 @@ export const configureTypeReduxApiCreator = <
 //   typeof mapEndpointToMethod
 // >(mapEndpointToMethod)
 
-// const Demo = eco.createEndpoint()(
-//   {
-//     request: 'DEMO_REQUEST',
-//     success: 'DEMO_SUCCESS',
-//     failure: 'DEMO_FAILURE',
-//   } as const,
-//   Endpoints.Demo,
-// )
+// const Demo = eco.createEndpoint()('Demo', Endpoints.Demo)
 
 // type DemoAction = typeof Demo['action']['all']
 
