@@ -204,7 +204,6 @@ export const configureTypeReduxApiCreator = <
     T extends string,
     Endpoint extends Endpoints
   >(
-    t: T,
     e: Endpoint,
     config?: ExtraEndpointConfig,
   ) => {
@@ -213,9 +212,9 @@ export const configureTypeReduxApiCreator = <
     type Success = 'Success'
 
     const types = {
-      request: `${t}_REQUEST` as Request,
-      success: `${t}_SUCCESS` as Success,
-      failure: `${t}_FAILURE` as Failure,
+      request: `${e}+request` as Request,
+      success: `${e}+success` as Success,
+      failure: `${e}+failure` as Failure,
     } as const
 
     const ActionA = createApiType<typeof types, Endpoint, M>()
@@ -254,7 +253,7 @@ export const configureTypeReduxApiCreator = <
 //   typeof mapEndpointToMethod
 // >(mapEndpointToMethod)
 
-// const Demo = eco.createEndpoint()('Demo', Endpoints.Demo)
+// const Demo = eco.createEndpoint()(Endpoints.Demo)
 
 // type DemoAction = typeof Demo['action']['all']
 
