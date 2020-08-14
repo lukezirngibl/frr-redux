@@ -9,7 +9,6 @@ import {
 } from './api.types'
 import { toArray } from 'fp-ts/lib/Record'
 import { fromNullable } from 'fp-ts/lib/Option'
-import { Newtype } from 'newtype-ts'
 
 export const configureTypeReduxApiCreator = <
   API extends any,
