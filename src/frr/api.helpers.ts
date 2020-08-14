@@ -219,15 +219,15 @@ export const configureTypeReduxApiCreator = <
       request: `${t}_REQUEST`,
       success: `${t}_SUCCESS`,
       failure: `${t}_FAILURE`,
-    })
+    })['created']
 
-    const ActionA = createApiType<typeof types['created'], Endpoint, M>()
+    const ActionA = createApiType<typeof types, Endpoint, M>()
     type Action = typeof ActionA
-    const call = callAPI<Action>(e, config)(types.created)
+    const call = callAPI<Action>(e, config)(types)
     return {
       call,
       action: (undefined as unknown) as Action,
-      types: types.created,
+      types: types,
     }
   }
 
