@@ -5,9 +5,11 @@ import {
   RestCallAction,
   RestMethod,
   SystemActionType,
+  PostRequest,
 } from './api.types'
 import { toArray } from 'fp-ts/lib/Record'
 import { fromNullable } from 'fp-ts/lib/Option'
+import { Newtype } from 'newtype-ts'
 
 export const configureTypeReduxApiCreator = <
   API extends any,
@@ -200,20 +202,30 @@ export const configureTypeReduxApiCreator = <
   }
 
   const createEndpoint = <M = undefined>() => <
-    T extends { request: string; failure: string; success: string },
+    T extends string,
     Endpoint extends Endpoints
   >(
     t: T,
     e: Endpoint,
     config?: ExtraEndpointConfig,
   ) => {
-    const ActionA = createApiType<T, Endpoint, M>()
+    const requestType = `${t}_REQUEST`
+    const successType = `${t}_SUCCESS`
+    const failureType = `${t}_FAILURE`
+
+    const types = {
+      request: requestType,
+      success: successType,
+      failure: failureType,
+    }
+
+    const ActionA = createApiType<typeof types, Endpoint, M>()
     type Action = typeof ActionA
-    const call = callAPI<Action>(e, config)(t)
+    const call = callAPI<Action>(e, config)(types)
     return {
       call,
       action: (undefined as unknown) as Action,
-      types: t,
+      types,
     }
   }
 
@@ -222,54 +234,47 @@ export const configureTypeReduxApiCreator = <
   }
 }
 
-// export enum Endpoints {
-//   Demo = '/demo',
-// }
+export enum Endpoints {
+  Demo = '/demo',
+}
 
-// export type API = {
-//   [Endpoints.Demo]: PostRequest<{
-//     json: { payload: boolean }
-//     response: { abc: boolean }
-//   }>
-// }
+export type API = {
+  [Endpoints.Demo]: PostRequest<{
+    json: { payload: boolean }
+    response: { abc: boolean }
+  }>
+}
 
-// export const mapEndpointToMethod = {
-//   [Endpoints.Demo]: RestMethod.POST,
-// }
+export const mapEndpointToMethod = {
+  [Endpoints.Demo]: RestMethod.POST,
+}
 
-// const eco = configureTypeReduxApiCreator<
-//   API,
-//   Endpoints,
-//   typeof mapEndpointToMethod
-// >(mapEndpointToMethod)
+const eco = configureTypeReduxApiCreator<
+  API,
+  Endpoints,
+  typeof mapEndpointToMethod
+>(mapEndpointToMethod)
 
-// const Demo = eco.createEndpoint(
-//   {
-//     request: 'DEMO_REQUEST',
-//     success: 'DEMO_SUCCESS',
-//     failure: 'DEMO_FAILURE',
-//   } as const,
-//   Endpoints.Demo,
-// )
+const Demo = eco.createEndpoint()('Demo', Endpoints.Demo)
 
-// type DemoAction = typeof Demo['action']['all']
+type DemoAction = typeof Demo['action']['all']
 
-// type DemoState = {
-//   demo: boolean
-// }
+type DemoState = {
+  demo: boolean
+}
 
-// export const demoReducer = (
-//   state: DemoState = { demo: true },
-//   action: DemoAction,
-// ): DemoState => {
-//   switch (action.type) {
-//     case Demo.types.success:
-//       return {
-//         ...state,
-//         demo: action.payload.abc,
-//       }
+export const demoReducer = (
+  state: DemoState = { demo: true },
+  action: DemoAction,
+): DemoState => {
+  switch (action.type) {
+    case Demo.types.success:
+      return {
+        ...state,
+        demo: action.payload.abc,
+      }
 
-//     default:
-//       return state
-//   }
-// }
+    default:
+      return state
+  }
+}

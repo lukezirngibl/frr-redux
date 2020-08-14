@@ -36,6 +36,7 @@ function* callRestApi(action: RestAction) {
       })
       // console.log(types.failure, payload)
     } else {
+      // console.log('frr-redux: ', payload)
       yield put({
         type: types.success,
         payload,
