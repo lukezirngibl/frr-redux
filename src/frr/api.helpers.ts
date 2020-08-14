@@ -234,47 +234,47 @@ export const configureTypeReduxApiCreator = <
   }
 }
 
-export enum Endpoints {
-  Demo = '/demo',
-}
+// export enum Endpoints {
+//   Demo = '/demo',
+// }
 
-export type API = {
-  [Endpoints.Demo]: PostRequest<{
-    json: { payload: boolean }
-    response: { abc: boolean }
-  }>
-}
+// export type API = {
+//   [Endpoints.Demo]: PostRequest<{
+//     json: { payload: boolean }
+//     response: { abc: boolean }
+//   }>
+// }
 
-export const mapEndpointToMethod = {
-  [Endpoints.Demo]: RestMethod.POST,
-}
+// export const mapEndpointToMethod = {
+//   [Endpoints.Demo]: RestMethod.POST,
+// }
 
-const eco = configureTypeReduxApiCreator<
-  API,
-  Endpoints,
-  typeof mapEndpointToMethod
->(mapEndpointToMethod)
+// const eco = configureTypeReduxApiCreator<
+//   API,
+//   Endpoints,
+//   typeof mapEndpointToMethod
+// >(mapEndpointToMethod)
 
-const Demo = eco.createEndpoint()('Demo', Endpoints.Demo)
+// const Demo = eco.createEndpoint()('Demo', Endpoints.Demo)
 
-type DemoAction = typeof Demo['action']['all']
+// type DemoAction = typeof Demo['action']['all']
 
-type DemoState = {
-  demo: boolean
-}
+// type DemoState = {
+//   demo: boolean
+// }
 
-export const demoReducer = (
-  state: DemoState = { demo: true },
-  action: DemoAction,
-): DemoState => {
-  switch (action.type) {
-    case Demo.types.success:
-      return {
-        ...state,
-        demo: action.payload.abc,
-      }
+// export const demoReducer = (
+//   state: DemoState = { demo: true },
+//   action: DemoAction,
+// ): DemoState => {
+//   switch (action.type) {
+//     case Demo.types.success:
+//       return {
+//         ...state,
+//         demo: action.payload.abc,
+//       }
 
-    default:
-      return state
-  }
-}
+//     default:
+//       return state
+//   }
+// }
