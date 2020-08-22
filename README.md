@@ -282,7 +282,7 @@ const Page = () => {
           dispatch(logout.call())
         }}
       >
-        Login
+        Logout
       </button>
       <button
         onClick={() => {
