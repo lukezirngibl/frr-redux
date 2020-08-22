@@ -1,8 +1,8 @@
-# FRR Redux - E2E Typed API actions + Redux 
+E2E Typed API actions + Redux 
 
 ### Motivation
 
-This library is meant with setting up a fully typed redux frontend application. Data should ideally be perfectly typed all the way from your API boundary to the React component. This library provides a redux pattern and helper methods to accomplish this end to end typing.
+This library is meant with setting up a fully typed redux frontend application. Data should ideally be perfectly typed all the way from your API boundary to the React component. This library provides a redux pattern and helper methods to accomplish this end to end typing. It also supports and pattern for intregrating redux with an OpenAPI spec.
 
 ### Getting started
 
