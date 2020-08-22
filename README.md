@@ -2,7 +2,7 @@
 
 ### Motivation
 
-This library is meant with setting up a fully typed redux frontend application. Data should ideally be perfectly typed all the way from your API boundary to the React component. This library provides a redux pattern and helper methods to accomplish this end to end typing. It also supports a pattern for integrating redux with an OpenAPI spec.
+This library is meant for setting up a fully typed redux frontend application. Data should ideally be perfectly typed all the way from your API boundary to the React component. This library provides a redux pattern and helper methods to accomplish this end to end typing. It also supports a pattern for integrating redux with an OpenAPI spec.
 
 
 ### Getting started using template project
