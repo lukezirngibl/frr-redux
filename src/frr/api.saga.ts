@@ -3,8 +3,8 @@ import { RestApiPayload, SystemActionType } from './api.types'
 
 export type SagaApiConfig = {
   baseUrl: string
-  getToken: () => Promise<string | undefined>
-  debug: boolean
+  getToken?: () => Promise<string | undefined>
+  debug?: boolean
 }
 
 const makeApiRequest = (config: SagaApiConfig) => async ({
@@ -18,11 +18,18 @@ const makeApiRequest = (config: SagaApiConfig) => async ({
   server?: string
   body?: string | FormData
 }) => {
-  const token = await config.getToken()
+  let token: string | undefined = undefined
+  if (config.getToken) {
+    token = await config.getToken()
+  }
   const options: RequestInit = {
     method,
     headers: {
-      'x-access-token': token || '',
+      ...(token === undefined
+        ? {}
+        : {
+            'x-access-token': token,
+          }),
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
@@ -66,29 +73,12 @@ const configuireRestApi = (config: SagaApiConfig) =>
     }
 
     try {
-      // console.log('sending...')
       const { raw, timeout } = yield race({
         raw: makeApiRequest(config)({ method, endpoint, body, server }),
         timeout: sagaDelay(10000),
       })
 
-      // console.log('receiving...')
-
-      // console.log(raw, timeout)
-
       if (!raw) {
-        if (config.debug) {
-          console.log('error - 1')
-        }
-        // yield put(
-        //   setToastMessage(
-        //     some({
-        //       message: 'Bad Internet Connection.',
-        //       type: ToastType.Error,
-        //       meta: action,
-        //     }),
-        //   ),
-        // )
         return
       }
 
@@ -100,36 +90,6 @@ const configuireRestApi = (config: SagaApiConfig) =>
           payload,
           meta,
         })
-
-        if (config.debug) {
-          console.log('error - 2')
-        }
-
-        if (raw.status !== 410) {
-          if (config.debug) {
-            console.log('error - 3')
-          }
-          // console.log({
-          //   message:
-          //     'error' in payload && typeof payload.error === 'string'
-          //       ? payload.error
-          //       : 'Error has occurred.',
-          //   type: ToastType.Error,
-          //   meta: action,
-          // })
-          // yield put(
-          //   setToastMessage(
-          //     some({
-          //       message:
-          //         'error' in payload && typeof payload.error === 'string'
-          //           ? payload.error
-          //           : 'Error has occurred.',
-          //       type: ToastType.Error,
-          //       meta: action,
-          //     }),
-          //   ),
-          // )
-        }
       } else {
         yield put({
           type: types.success,
@@ -146,20 +106,6 @@ const configuireRestApi = (config: SagaApiConfig) =>
         payload: {},
         meta,
       })
-      // console.log({
-      //   message: 'Server error.',
-      //   type: ToastType.Error,
-      //   meta: action,
-      // })
-      // yield put(
-      //   setToastMessage(
-      //     some({
-      //       message: 'Server error.',
-      //       type: ToastType.Error,
-      //       meta: action,
-      //     }),
-      //   ),
-      // )
     }
   }
 
