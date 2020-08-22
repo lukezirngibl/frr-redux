@@ -1,4 +1,4 @@
-# E2E Typed API actions + Redux
+# Typesafe Thunk + View Redux Actions w/ OpenAPI Integration
 
 ### Motivation
 
