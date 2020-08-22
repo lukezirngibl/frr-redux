@@ -305,7 +305,7 @@ const Page = () => {
 
 export const App = () => {
   return (
-    <Provider store={store as any}>
+    <Provider store={store}>
       <Page />
     </Provider>
   )
