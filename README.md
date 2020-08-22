@@ -4,18 +4,28 @@
 
 This library is meant with setting up a fully typed redux frontend application. Data should ideally be perfectly typed all the way from your API boundary to the React component. This library provides a redux pattern and helper methods to accomplish this end to end typing. It also supports a pattern for integrating redux with an OpenAPI spec.
 
-### Getting started
+
+### Getting started using template project
+
+```
+git clone git@github.com:lukezirngibl/frr-redux-starter.git frr-redux-starter
+cd frr-redux-starter
+yarn install or npm install
+yarn start or npm start
+```
+
+### Manually integrate into existing project
 
 ##### Yarn Install
 
 ```
-yarn add frr-redux typelevel-ts react fp-ts redux-saga redux-thunk react-redux redux
+yarn add frr-redux typelevel-ts react redux-saga redux-thunk react-redux redux
 ```
 
 ##### NPM Install
 
 ```
-npm install frr-redux typelevel-ts react fp-ts redux-saga redux-thunk react-redux redux
+npm install frr-redux typelevel-ts react redux-saga redux-thunk react-redux redux
 ```
 
 ### Example
