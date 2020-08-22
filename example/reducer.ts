@@ -2,6 +2,7 @@ import * as ApiActions from './api.actions'
 import * as ViewActions from './view.actions'
 
 type ReducerAction =
+  | ViewActions.SetScore
   | ViewActions.Reset
   | typeof ApiActions.login['action']['success']
   | typeof ApiActions.logout['action']['success']
@@ -21,6 +22,9 @@ export const Reducer = (
   switch (action.type) {
     case ViewActions.ViewActionType.Reset:
       return { ...state, reset: true }
+
+    case ViewActions.ViewActionType.SetScore:
+      return { ...state, score: action.payload }
 
     case ApiActions.logout.types.success:
       return initialState
