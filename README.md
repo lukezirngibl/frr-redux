@@ -6,10 +6,16 @@ This library is meant with setting up a fully typed redux frontend application. 
 
 ### Getting started
 
-##### Install
+##### Yarn Install
 ```
 yarn add frr-redux
 yarn add typelevel-ts react fp-ts redux-saga redux-thunk react-redux
+```
+
+##### NPM Install
+```
+npm install frr-redux
+npm install typelevel-ts react fp-ts redux-saga redux-thunk react-redux
 ```
 
 ##### Setup API Types (Manually)
