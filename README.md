@@ -82,7 +82,7 @@ const configuration = new Configuration({
 const appApi = new AppApi(configuration)
 
 export const mapEndpointToFunc = {
-  [Endpoints.Login]: appApi.getProducts.bind(appApi),
+  [Endpoints.Login]: appApi.login.bind(appApi),
   [Endpoints.Logout]: appApi.logout.bind(appApi),
 }
 
