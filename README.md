@@ -10,7 +10,8 @@ yarn add typelevel-ts react fp-ts redux-saga redux-thunk react-redux
 ```
 
 ##### Setup API Types (Manually)
-```
+```ts
+
 import { configureTypeReduxApiCreator } from 'frr-redux/lib/frr/api.helpers'
 
 import {
@@ -55,7 +56,8 @@ export { createEndpoint }
 ```
 
 ##### Setup API Types (OpenAPI)
-```
+```ts
+
 import { Configuration } from './openapi/runtime'
 import { AppApi } from './path/to/openApi
 
@@ -82,7 +84,8 @@ export { createEndpoint }
 ```
 
 ##### Setup API Actions
-```
+```ts
+
 import { createEndpoint } from './path/to/api/types
 
 export const login = createEndpoint<{ username: string }>()(
@@ -105,7 +108,8 @@ export const logout = createEndpoint()(
 ```
 
 ##### Setup View Actions
-```
+```ts
+
 import { createEmptyViewAction } from 'frr-redux/lib/view.helpers'
 
 export enum ViewActionType {
@@ -122,7 +126,8 @@ export const reset = createEmptyViewAction<Reset>(
 ```
 
 ##### Setup Reducer
-```
+```ts
+
 import * as ApiActions from './path/to/api/actions
 import * as ViewActions from './path/to/view/actions
 
@@ -161,7 +166,8 @@ export const reducer = (
 ```
 
 ##### Setup Api Saga (using OpenAPI)
-```
+```ts
+
 import { ApiSaga } from 'frr-redux/lib/openapi/api-saga'
 
 export function* Saga() {
@@ -171,7 +177,8 @@ export function* Saga() {
 ```
 
 ##### Setup Api Saga (using manually)
-```
+```ts
+
 import { ApiSaga } from 'frr-redux/lib/frr/api-saga'
 
 const ApiSaga = configureApiSaga({
@@ -185,7 +192,8 @@ export function* Saga() {
 ```
 
 ##### Setup Store
-```
+```ts
+
 import { applyMiddleware, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import thunkMiddleware from 'redux-thunk'
@@ -208,7 +216,8 @@ sagaMiddleware.run(rootSaga)
 ```
 
 ##### Basic React App
-```
+```ts
+
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { store } from './path/to/store'
 import { login, logout } from './path/to/api/actions'; 
