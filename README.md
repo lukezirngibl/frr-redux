@@ -1,4 +1,4 @@
-E2E Typed API actions + Redux 
+# E2E Typed API actions + Redux 
 
 ### Motivation
 
