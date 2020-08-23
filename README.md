@@ -10,8 +10,8 @@ This library is meant for setting up a fully typed redux frontend application. D
 ```
 git clone git@github.com:lukezirngibl/frr-redux-starter.git frr-redux-starter
 cd frr-redux-starter
-yarn install or npm install
-yarn start or npm start
+yarn install
+yarn start
 ```
 
 ### Manually integrate into existing project
