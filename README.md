@@ -19,13 +19,13 @@ yarn start or npm start
 ##### Yarn Install
 
 ```
-yarn add frr-redux typelevel-ts react redux-saga redux-thunk react-redux redux
+yarn add frr-redux
 ```
 
 ##### NPM Install
 
 ```
-npm install frr-redux typelevel-ts react redux-saga redux-thunk react-redux redux
+npm install frr-redux
 ```
 
 ### Example
